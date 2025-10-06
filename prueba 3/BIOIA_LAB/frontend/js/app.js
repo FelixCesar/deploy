@@ -1,5 +1,8 @@
-const API_BASE = "http://localhost:5500";
+// ❌ ELIMINA ESTA LÍNEA:
+// const API_BASE = "http://localhost:5500";
 
+// ✅ REEMPLAZA CON ESTO:
+const API_BASE = ""; // Rutas relativas - funciona en cualquier dominio
 
 const loginScreen = document.getElementById('login-screen');
 const dashboard   = document.getElementById('dashboard');
@@ -144,7 +147,7 @@ Nanobots activos: ${(data.nanobots?.activos ?? 0)}
 // BACKEND
 async function calcularEnBackend(payload){
   try{
-    const res = await fetch(`${API_BASE}/api/calcular`,{
+    const res = await fetch(`/api/calcular`,{  // ✅ Ruta relativa
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(payload)
@@ -160,7 +163,7 @@ async function calcularEnBackend(payload){
 // ✅ Cargar historial REAL del backend (historial.json)
 async function cargarHistorial() {
   try {
-    const res = await fetch(`${API_BASE}/api/historial`);
+    const res = await fetch(`/api/historial`);  // ✅ Ruta relativa
     if (!res.ok) throw new Error("No OK");
 
     const data = await res.json();
@@ -229,7 +232,7 @@ async function cargarHistorial() {
     document.getElementById('log').innerHTML = `
       <div class="item error">
         ⚠️ No se pudo cargar el historial.<br>
-        Verifica que el backend esté corriendo en <b>${API_BASE}</b>.
+        Verifica que el backend esté corriendo correctamente.
       </div>
     `;
   }
