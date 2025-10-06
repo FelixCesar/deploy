@@ -1,53 +1,6 @@
-// ❌ ELIMINA ESTA LÍNEA:
-// const API_BASE = "http://localhost:5500";
+const API_BASE = ""; // rutas relativas
 
-// ✅ REEMPLAZA CON ESTO:
-const API_BASE = ""; // Rutas relativas - funciona en cualquier dominio
-
-const loginScreen = document.getElementById('login-screen');
-const dashboard   = document.getElementById('dashboard');
-const loginForm   = document.getElementById('login-form');
-
-loginForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const u = document.getElementById('username').value;
-  const p = document.getElementById('password').value;
-if (u === 'admin' && p === '1234') {
-  
-  document.getElementById('login-screen').style.display = 'none';
-  
-  document.getElementById('dashboard').style.display = 'flex';
-  console.log("✅ Sesión iniciada correctamente");
-} else {
-  alert('Acceso denegado ❌');
-}
-
-});
-
-document.getElementById('logout').addEventListener('click', () => {
-  console.log("🚪 Cerrando sesión...");
-  
-  
-  const dashboard = document.getElementById('dashboard');
-  dashboard.style.display = 'none';
-
-  
-  const loginScreen = document.getElementById('login-screen');
-  loginScreen.style.display = 'flex';
-
-  
-  document.getElementById('username').value = '';
-  document.getElementById('password').value = '';
-
-  
-  const statusEl = document.getElementById('status');
-  if (statusEl) statusEl.textContent = "Listo";
-
-  alert("Sesión cerrada exitosamente 🌱");
-});
-
-
-
+// Menú lateral
 const menuButtons = document.querySelectorAll('.menu-item');
 const sections    = document.querySelectorAll('.section');
 menuButtons.forEach(btn=>{
@@ -117,12 +70,11 @@ CH₄: ${(data.gases?.CH4 ?? 0).toFixed(2)} kg
 Nanobots activos: ${(data.nanobots?.activos ?? 0)}
   `.trim();
 
-  await runProgress(36000); // 36s visuales
+  await runProgress(36000);
   animOutput.textContent = resumen;
   stopAnim(true); 
 
   await cargarHistorial();
-
 
   panelOutput.innerHTML = `
 <strong>👩‍🚀 Tripulantes:</strong> ${crew} — <strong>🕐 Días:</strong> ${days}<br>
@@ -140,14 +92,13 @@ Nanobots activos: ${(data.nanobots?.activos ?? 0)}
     ${renderChart("Nanobots", data.visual?.nanobots_pct)}
   `;
 
-  await cargarHistorial();
   statusEl.textContent = "Listo ✔️";
 });
 
 // BACKEND
 async function calcularEnBackend(payload){
   try{
-    const res = await fetch(`/api/calcular`,{  // ✅ Ruta relativa
+    const res = await fetch(`/api/calcular`,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(payload)
@@ -160,26 +111,20 @@ async function calcularEnBackend(payload){
   }
 }
 
-// ✅ Cargar historial REAL del backend (historial.json)
+// HISTORIAL
 async function cargarHistorial() {
   try {
-    const res = await fetch(`/api/historial`);  // ✅ Ruta relativa
+    const res = await fetch(`/api/historial`);
     if (!res.ok) throw new Error("No OK");
 
     const data = await res.json();
     console.log("📦 Datos del historial recibidos:", data);
 
-    const logBox = document.getElementById('log');
-
     if (!Array.isArray(data) || !data.length) {
-      logBox.innerHTML = `
-        <div class="item empty">
-          🌱 Aún no hay simulaciones guardadas.
-        </div>`;
+      logBox.innerHTML = `<div class="item empty">🌱 Aún no hay simulaciones guardadas.</div>`;
       return;
     }
 
-    // Mostrar tabla real
     const table = `
       <div class="table-container">
         <table class="historial-table">
@@ -198,47 +143,32 @@ async function cargarHistorial() {
             </tr>
           </thead>
           <tbody>
-            ${data.reverse().map(item => {
-              const energia = item.resultados?.energia?.total_kw ?? 0;
-              const bacterias = item.resultados?.bacterias?.total_millones ?? 0;
-              const co2 = item.resultados?.gases?.CO2 ?? 0;
-              const ch4 = item.resultados?.gases?.CH4 ?? 0;
-              const nanobots = item.resultados?.nanobots?.activos ?? 0;
-              return `
-                <tr>
-                  <td>${item.fecha ?? "-"}</td>
-                  <td>${item.tripulantes ?? "-"}</td>
-                  <td>${item.dias ?? "-"}</td>
-                  <td>${item.perfil ?? "-"}</td>
-                  <td>${item.bioAI ?? "-"}</td>
-                  <td>${energia.toFixed(2)}</td>
-                  <td>${bacterias.toFixed(2)}</td>
-                  <td>${co2.toFixed(2)}</td>
-                  <td>${ch4.toFixed(2)}</td>
-                  <td>${nanobots}</td>
-                </tr>
-              `;
-            }).join("")}
+            ${data.reverse().map(item => `
+              <tr>
+                <td>${item.fecha ?? "-"}</td>
+                <td>${item.tripulantes ?? "-"}</td>
+                <td>${item.dias ?? "-"}</td>
+                <td>${item.perfil ?? "-"}</td>
+                <td>${item.bioAI ?? "-"}</td>
+                <td>${(item.resultados?.energia?.total_kw ?? 0).toFixed(2)}</td>
+                <td>${(item.resultados?.bacterias?.total_millones ?? 0).toFixed(2)}</td>
+                <td>${(item.resultados?.gases?.CO2 ?? 0).toFixed(2)}</td>
+                <td>${(item.resultados?.gases?.CH4 ?? 0).toFixed(2)}</td>
+                <td>${(item.resultados?.nanobots?.activos ?? 0)}</td>
+              </tr>
+            `).join("")}
           </tbody>
         </table>
       </div>
     `;
-
     logBox.innerHTML = table;
-    console.log("✅ Historial renderizado correctamente.");
-
   } catch (error) {
     console.error("❌ Error cargando historial:", error);
-    document.getElementById('log').innerHTML = `
-      <div class="item error">
-        ⚠️ No se pudo cargar el historial.<br>
-        Verifica que el backend esté corriendo correctamente.
-      </div>
-    `;
+    logBox.innerHTML = `<div class="item error">⚠️ No se pudo cargar el historial.<br>Verifica el backend.</div>`;
   }
 }
 
-// ANIMACIÓN
+// ANIMACIONES
 function startAnim(){
   bar.style.width = '0%';
   eta.textContent = "Iniciando…";
@@ -289,8 +219,8 @@ function renderChart(label, val){
   return `
     <div class="chart" data-label="${label}" data-value="${val}">
       <svg viewBox="0 0 36 36" class="circular-chart">
-        <path class="circle-bg" d="M18 2.0845 a15.9155 15.9155 0 0 1 0 31.831 a15.9155 15.9155 0 0 1 0 -31.831"/>
-        <path class="circle" stroke-dasharray="${val},100" d="M18 2.0845 a15.9155 15.9155 0 0 1 0 31.831 a15.9155 15.9155 0 0 1 0 -31.831"/>
+        <path class="circle-bg" d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0 -31.831"/>
+        <path class="circle" stroke-dasharray="${val},100" d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0 -31.831"/>
         <text x="18" y="20.35" class="percentage">${val}%</text>
       </svg>
       <p>${label}</p>
