@@ -1,0 +1,115 @@
+:root{
+  --bg:#090e1a; --card:#151d31; --sidebar:#111a2e;
+  --text:#e6edf6; --primary:#5ddcff; --accent:#84cc16; --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Poppins",system-ui,sans-serif;background:var(--bg);color:var(--text)}
+.hidden{display:none}
+
+
+.login-screen{display:flex;justify-content:center;align-items:center;height:100vh;background:radial-gradient(circle,#0b132b,#000)}
+.login-box{width:360px;text-align:center;background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.login-box h1{margin:.2rem 0 1rem;color:var(--primary)}
+input,select{width:100%;padding:10px;margin:8px 0;border:none;border-radius:8px;background:#0e172a;color:var(--text)}
+.btn{cursor:pointer;padding:10px 16px;border:none;border-radius:var(--radius);font-weight:600}
+.btn.primary{background:linear-gradient(90deg,#5ddcff,#7cffcb);color:#011}
+.btn.ghost{background:transparent;border:1px solid #94a3b8;color:var(--text)}
+.hint{opacity:.7;font-size:.9rem}
+
+
+.dashboard{display:flex;height:100vh}
+.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:20px}
+.logo{color:var(--primary);margin-bottom:20px}
+.menu{display:flex;flex-direction:column;gap:10px;width:100%}
+.menu-item{background:none;border:none;color:var(--text);text-align:left;padding:10px;border-radius:10px}
+.menu-item.active{background:rgba(93,220,255,.2);color:var(--primary)}
+.content{flex:1;padding:24px;overflow-y:auto}
+.card{background:var(--card);border-radius:var(--radius);padding:18px;margin-top:16px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:12px}
+.actions{display:flex;align-items:center;gap:12px;margin-top:8px}
+.status{opacity:.8}
+
+
+.plant-lab{display:flex;justify-content:center;margin:20px 0;position:relative}
+.tube{width:120px;height:250px;background:linear-gradient(180deg,rgba(10,50,20,.3),rgba(0,0,0,.8));border:2px solid #4ade80;border-radius:60px;position:relative;overflow:hidden;box-shadow:0 0 25px rgba(0,255,100,.2)}
+.dna{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:3px;height:180px;background:linear-gradient(180deg,#00ff99,#00b383);box-shadow:0 0 8px #00ff88;animation:dnaPulse 2s infinite alternate}
+@keyframes dnaPulse{from{opacity:.7;transform:translateX(-50%) scaleY(1)}to{opacity:1;transform:translateX(-50%) scaleY(1.1)}}
+.stem{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:6px;height:0;background:#00ff88;border-radius:4px;box-shadow:0 0 15px #00ff88;animation:growStem 8s linear forwards}
+@keyframes growStem{from{height:0}to{height:140px}}
+.leaf{position:absolute;bottom:150px;width:0;height:0;background:#00ff99;border-radius:50%;box-shadow:0 0 10px #00ff88;opacity:0}
+.leaf-left{left:50%;transform-origin:right bottom;animation:growLeafLeft 8s linear forwards}
+.leaf-right{right:50%;transform-origin:left bottom;animation:growLeafRight 8s linear forwards}
+@keyframes growLeafLeft{0%,60%{opacity:0;width:0;height:0}80%{opacity:1;width:20px;height:40px;transform:rotate(-30deg) translate(-30px,-20px)}100%{opacity:1;width:25px;height:45px;transform:rotate(-35deg) translate(-35px,-20px)}}
+@keyframes growLeafRight{0%,60%{opacity:0;width:0;height:0}80%{opacity:1;width:20px;height:40px;transform:rotate(30deg) translate(30px,-20px)}100%{opacity:1;width:25px;height:45px;transform:rotate(35deg) translate(35px,-20px)}}
+.aura{position:absolute;inset:0;border-radius:60px;pointer-events:none;opacity:0;background:radial-gradient(circle at center,rgba(0,255,100,.5),transparent 70%);animation:none}
+@keyframes auraGlow{0%,100%{opacity:.8;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+
+
+.progress-bar{height:14px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:10px}
+.bar{height:100%;width:0;transition:width .3s linear}
+
+
+.charts{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:12px}
+.chart{text-align:center;color:#5ddcff}
+.circular-chart{display:block;margin:10px auto;max-width:84px;max-height:84px}
+.circle-bg{fill:none;stroke:#233;stroke-width:3.8}
+.circle{fill:none;stroke-width:2.8;stroke-linecap:round;animation:progress 1s ease-out forwards;stroke:#5ddcff}
+.percentage{fill:#5ddcff;font-size:.5em;text-anchor:middle}
+@keyframes progress{0%{stroke-dasharray:0 100}}
+
+
+.output{background:#000;color:#5ddcff;padding:12px;border-radius:10px;white-space:pre-wrap;font-family:monospace}
+.log .item{border:1px solid #273449;border-radius:12px;padding:10px;margin:8px 0}
+
+
+.login-screen,
+.dashboard {
+  transition: opacity 0.5s ease;
+}
+.hidden,
+[style*="display: none"] {
+  opacity: 0;
+}
+[style*="display: flex"],
+[style*="display: block"] {
+  opacity: 1;
+}
+
+.table-container {
+  margin-top: 1rem;
+  overflow-x: auto;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e6edf6;
+  font-size: 0.9rem;
+}
+
+.historial-table th {
+  background: linear-gradient(90deg, #5ddcff, #7cffcb);
+  color: #011;
+  padding: 8px;
+  text-align: center;
+}
+
+.historial-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.historial-table tr:hover {
+  background: rgba(93,220,255,0.1);
+  transition: 0.2s;
+}
+
+.item.error {
+  color: #ef4444;
+  text-align: center;
+  padding: 10px;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BIOIA - Interfaz Completa</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  
+  <section id="login-screen" class="login-screen active">
+    <div class="login-box">
+      <h1>🌱 BIOIA SYSTEM</h1>
+      <form id="login-form" autocomplete="off">
+        <label>Usuario</label>
+        <input id="username" type="password" placeholder="••••••" required />
+        <label>Contraseña</label>
+        <input id="password" type="password" placeholder="••••••" required />
+        <button class="btn primary" type="submit">Ingresar</button>
+      </form>
+      <p class="hint">©Astrocoders</p>
+    </div>
+  </section>
+
+  
+  <div id="dashboard" class="dashboard hidden">
+    <aside class="sidebar">
+      <h2 class="logo">🧬 BioIA</h2>
+      <nav class="menu">
+        <button class="menu-item active" data-section="animacion">🌿 Descomposicion</button>
+        <button class="menu-item" data-section="panel">📊 Panel científico</button>
+        <button class="menu-item" data-section="historial">📜 Historial</button>
+      </nav>
+      <button id="logout" class="btn ghost logout">Cerrar sesión</button>
+    </aside>
+
+    <main class="content">
+      
+      <form id="sim-form" class="card">
+        <div class="grid">
+          <div>
+            <label>Tripulantes</label>
+            <input id="crew" type="number" min="1" value="1" />
+          </div>
+          <div>
+            <label>Días</label>
+            <input id="days" type="number" min="1" value="1" />
+          </div>
+          <div>
+            <label>Perfil</label>
+            <select id="perfil">
+              <option value="Equilibrado">Equilibrado</option>
+              <option value="AltaMateriaOrganica">Alta Materia Orgánica</option>
+              <option value="Industrial">Industrial</option>
+            </select>
+          </div>
+          <div>
+            <label>Nivel BioAI</label>
+            <select id="bioai">
+              <option value="N1">N1</option>
+              <option value="N2">N2</option>
+              <option value="N3">N3</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="btn-run" type="submit">Iniciar simulación</button>
+          <span id="status" class="status">Listo</span>
+        </div>
+      </form>
+
+      
+      <section id="animacion" class="section active">
+        <div id="sim-anim" class="card">
+          <h3>🌱 Proceso biológico</h3>
+          <div class="plant-lab">
+            <div class="tube">
+              <div class="dna"></div>
+              <div class="stem"></div>
+              <div class="leaf leaf-left"></div>
+              <div class="leaf leaf-right"></div>
+              <div class="aura" id="aura"></div>
+            </div>
+          </div>
+          <div class="progress-bar"><div id="bar" class="bar"></div></div>
+          <p id="eta">Esperando simulación…</p>
+        </div>
+
+        <div id="anim-result" class="card hidden">
+          <h3>✅ Regeneración completada</h3>
+          <div id="anim-output" class="output"></div>
+          <button class="btn ghost" id="btn-anim-new">Nueva simulación</button>
+        </div>
+      </section>
+
+      
+      <section id="panel" class="section hidden">
+        <div class="card">
+          <h3>📊 Indicadores (desde el backend)</h3>
+          <div id="panel-output" class="output"></div>
+          <div class="charts" id="charts"></div>
+        </div>
+      </section>
+
+      
+      <section id="historial" class="section hidden">
+        <div class="card">
+          <h3>📜 Historial</h3>
+          <div id="log" class="log"></div>
+          <button class="btn ghost" id="btn-refresh-log">Actualizar historial</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
