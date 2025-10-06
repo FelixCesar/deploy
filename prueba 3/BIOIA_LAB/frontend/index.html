@@ -7,14 +7,32 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div id="dashboard" class="dashboard">
+  
+  <!-- 🔐 LOGIN -->
+  <section id="login-screen" class="login-screen active">
+    <div class="login-box">
+      <h1>🌱 BIOIA SYSTEM</h1>
+      <form id="login-form" autocomplete="off">
+        <label>Usuario</label>
+        <input id="username" type="text" placeholder="Usuario" value="admin" required />
+        <label>Contraseña</label>
+        <input id="password" type="password" placeholder="••••••" value="1234" required />
+        <button class="btn primary" type="submit">Ingresar</button>
+      </form>
+      <p class="hint">©Astrocoders</p>
+    </div>
+  </section>
+
+  <!-- 🧭 DASHBOARD -->
+  <div id="dashboard" class="dashboard hidden">
     <aside class="sidebar">
       <h2 class="logo">🧬 BioIA</h2>
       <nav class="menu">
-        <button class="menu-item active" data-section="animacion">🌿 Descomposición</button>
+        <button class="menu-item active" data-section="animacion">🌿 Descomposicion</button>
         <button class="menu-item" data-section="panel">📊 Panel científico</button>
         <button class="menu-item" data-section="historial">📜 Historial</button>
       </nav>
+      <button id="logout" class="btn ghost logout">Cerrar sesión</button>
     </aside>
 
     <main class="content">
@@ -51,6 +69,7 @@
         </div>
       </form>
 
+      <!-- 🌱 Animación -->
       <section id="animacion" class="section active">
         <div id="sim-anim" class="card">
           <h3>🌱 Proceso biológico</h3>
@@ -74,6 +93,7 @@
         </div>
       </section>
 
+      <!-- 📊 Panel -->
       <section id="panel" class="section hidden">
         <div class="card">
           <h3>📊 Indicadores (desde el backend)</h3>
@@ -82,6 +102,7 @@
         </div>
       </section>
 
+      <!-- 📜 Historial -->
       <section id="historial" class="section hidden">
         <div class="card">
           <h3>📜 Historial</h3>
